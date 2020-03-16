@@ -39,13 +39,17 @@ class App extends Component {
     //deduct money
   }
 
+  addFundsHelper = (amount) => {
+    this.setState({cash: this.state.cash + amount})
+  }
+
   render() {
     let emptyPlates = this.state.sushis.filter(sushi => sushi.eaten === true)
     //data.filter((x,i) => { return x.select; }).length
     console.log(emptyPlates)
     return (
       <div className="app">
-        <SushiContainer sushis={this.state.sushis} eatSushi={this.eatSushi}/>
+        <SushiContainer sushis={this.state.sushis} eatSushi={this.eatSushi} addFundsHelper={this.addFundsHelper}/>
         <Table emptyPlates={emptyPlates} cash={this.state.cash}/>
       </div>
     );

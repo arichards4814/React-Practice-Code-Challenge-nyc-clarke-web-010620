@@ -1,7 +1,7 @@
 import React from 'react'
 
 const SushiWallet = (props) => {
-    return <button onClick={props.nextSushis}>
+    return <button onClick={props.showForm}>
             Add Money
           </button>
 }
