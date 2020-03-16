@@ -8,7 +8,8 @@ const API = "http://localhost:3000/sushis"
 class App extends Component {
 
   state = {
-    sushis: []
+    sushis: [],
+    cash: 100
   }
 
   componentDidMount(){
@@ -22,12 +23,20 @@ class App extends Component {
   }
 
   eatSushi = (id) => {
-    //find sushi, amend it, and then set state
+
     
+    //find sushi, amend it, and then set state
     let sushiCopy = [...this.state.sushis]
     let sushiIndex = sushiCopy.findIndex(sushi => sushi.id === id)
-    sushiCopy[sushiIndex].eaten = true
-    this.setState({sushiCopy})
+
+    if (this.state.cash - sushiCopy[sushiIndex].price <= 0){
+      alert("Not enough money!")
+    } else {
+      this.setState({cash:  this.state.cash - sushiCopy[sushiIndex].price})
+      sushiCopy[sushiIndex].eaten = true
+      this.setState({sushiCopy})
+    }
+    //deduct money
   }
 
   render() {
@@ -37,7 +46,7 @@ class App extends Component {
     return (
       <div className="app">
         <SushiContainer sushis={this.state.sushis} eatSushi={this.eatSushi}/>
-        <Table emptyPlates={emptyPlates}/>
+        <Table emptyPlates={emptyPlates} cash={this.state.cash}/>
       </div>
     );
   }
